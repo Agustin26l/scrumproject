@@ -22,9 +22,22 @@ def juego_ahorcado():
         print(mostrar_progreso(palabra, letras_adivinadas))
         letra = input("Adivina una letra: ").lower()
 
+        if letra in letras_adivinadas:
+            print("Ya has adivinado esa letra. Intenta con otra.")
+            continue
+
         letras_adivinadas.add(letra)
-        intentos_fallidos += 1
-        print(f"Letra incorrecta. Te quedan {max_intentos - intentos_fallidos} intentos.")
+
+        if letra in palabra:
+            if all(letra in letras_adivinadas for letra in palabra):
+                print(f"¡Felicidades! Adivinaste la palabra: {palabra}")
+                break
+        else:
+            intentos_fallidos += 1
+            print(f"Letra incorrecta. Te quedan {max_intentos - intentos_fallidos} intentos.")
 
     if intentos_fallidos == max_intentos:
         print(f"Lo siento, has perdido. La palabra era: {palabra}")
+
+if __name__ == "__main__":
+    juego_ahorcado()
